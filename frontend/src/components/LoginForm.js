@@ -1,5 +1,5 @@
 import React from "react"
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {Form, Input, Button, notification} from "antd";
 import {SmileTwoTone, FrownTwoTone} from "@ant-design/icons";
 import {useAppContext, setToken} from "store"
@@ -7,7 +7,9 @@ import {axiosInstance} from "api"
 
 export default function Login() {
   const history = useHistory();
+  const location = useLocation();
   const { dispatch } = useAppContext()
+  const { from: loginRedirectUrl } = location.state || {from: "/"}
   const onFinish = values => {
     async function fn() {
       const { username, password } = values
@@ -18,11 +20,11 @@ export default function Login() {
         const { data: {token: jwtToken} } = response
         dispatch(setToken(jwtToken))
         notification.open({
-          title: "로그인 성공!",
-          description: "홈 화면으로 이동합니다",
+          message: "로그인 성공!",
+          description: (location.state ? "이전페이지" : "홈으") + "로 이동합니다", 
           icon: <SmileTwoTone />
         })
-        history.push("/")
+        history.push(loginRedirectUrl);
       } catch(error) {
         console.error(error)
       }      

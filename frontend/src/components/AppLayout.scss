@@ -1,0 +1,44 @@
+.app {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas:
+    ". header header header ."
+    "menu-sidebar contents contents suggestion-sidebar . "
+    ". footer footer footer .";
+
+  width: 2048px;
+  max-width: 100%;
+  margin: 10px auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-area: header;
+
+    .page-title {
+    }
+    .search {
+    }
+    .topnav {
+    }
+  }
+
+  .menu-sidebar {
+    grid-area: menu-sidebar;
+  }
+
+  .contents {
+    grid-area: contents;
+  }
+
+  .suggestion-sidebar {
+    grid-area: suggestion-sidebar;
+  }
+
+  .footer {
+    grid-area: footer;
+    justify-self: center;
+  }
+}
