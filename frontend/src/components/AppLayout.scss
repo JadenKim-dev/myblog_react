@@ -18,10 +18,14 @@
     grid-area: header;
 
     .page-title {
+      flex: 0.7;
     }
     .search {
+      flex: 2;
     }
     .topnav {
+      flex: 1;
+      margin-left: 40px
     }
   }
 
@@ -31,6 +35,7 @@
 
   .contents {
     grid-area: contents;
+    justify-items: center;
   }
 
   .suggestion-sidebar {

@@ -21,7 +21,7 @@ export default function Login() {
         dispatch(setToken(jwtToken))
         notification.open({
           message: "로그인 성공!",
-          description: (location.state ? "이전페이지" : "홈으") + "로 이동합니다", 
+          description: (location.state ? "페이지" : "홈으") + "로 이동합니다", 
           icon: <SmileTwoTone />
         })
         history.push(loginRedirectUrl);

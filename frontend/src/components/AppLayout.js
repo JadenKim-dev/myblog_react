@@ -1,9 +1,10 @@
 import React from "react";
-import { Input, Menu } from "antd";
+import { Input } from "antd";
 import "./AppLayout.scss";
 import LogoImage from "assets/logo.jpg";
+import TopnavMenu from "components/TopnavMenu";
 
-function AppLayout({ children }) {
+function AppLayout({ children }) {  
   return (
     <div className="app">
       <div className="header">
@@ -11,14 +12,10 @@ function AppLayout({ children }) {
           <img src={LogoImage} alt="logo" />
         </h1>
         <div className="search">
-          <Input.Search />
+          <Input.Search size="large"/>
         </div>
         <div className="topnav">
-          <Menu mode="horizontal" style={{ fontSize:"1.2em" }}>
-            <Menu.Item>Login</Menu.Item>
-            <Menu.Item>Logout</Menu.Item>
-            <Menu.Item>회원가입</Menu.Item>
-          </Menu>
+          <TopnavMenu />
         </div>
       </div>
       <div className="menu-sidebar">

@@ -18,7 +18,7 @@ export function setStorageItem( key, value ) {
   }
 }
 
-function useLocalStorage(key, initialValue) {
+export function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => (
     getStorageItem(key, initialValue)
   ));

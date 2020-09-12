@@ -12,6 +12,7 @@ export default function PostNewForm() {
   const headers = {Authorization: `JWT ${jwtToken}`}
   
   const handleFinish = async values => {
+    console.log(values)
     const {title, photo: {fileList}, content} = values;
     const formData = new FormData();
     formData.append("title", title);
@@ -19,6 +20,7 @@ export default function PostNewForm() {
       formData.append("photo", file.originFileObj);
     })
     formData.append("content", content);
+    console.log(formData)
     try {
       await axiosInstance.post("/api/posts/", formData, {headers})
       notification.open({
