@@ -3,14 +3,15 @@ import { Input } from "antd";
 import "./AppLayout.scss";
 import LogoImage from "assets/logo.jpg";
 import TopnavMenu from "components/TopnavMenu";
+import MenuSidebar from "./MenuSidebar"
 
 function AppLayout({ children }) {  
   return (
     <div className="app">
       <div className="header">
-        <h1 className="page-title">
+        <a className="page-title" href="/">
           <img src={LogoImage} alt="logo" />
-        </h1>
+        </a>
         <div className="search">
           <Input.Search size="large"/>
         </div>
@@ -19,7 +20,7 @@ function AppLayout({ children }) {
         </div>
       </div>
       <div className="menu-sidebar">
-        menu-sidebar
+        <MenuSidebar />
       </div>
       <div className="contents">{children}</div>
       <div className="suggestion-sidebar">

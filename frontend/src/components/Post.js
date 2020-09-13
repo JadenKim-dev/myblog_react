@@ -10,9 +10,10 @@ export default function Post({ post }) {
   const {username, name, avatar_url} = author;
   
   return(
-    <div className="post">
+    <div className="post" style={{ marginBottom: "1.5em" }}>
       <Card
         style={{ width: "100%" }}
+        hoverable
       >
         <Card.Meta
           avatar={avatar_url ? <Avatar size="large" src={avatar_url} /> : 
