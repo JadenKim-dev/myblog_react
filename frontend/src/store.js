@@ -51,4 +51,4 @@ const SET_APP_TREE_DATA = "APP/SET_TREE_DATA"
 
 export const setToken = token => ({ type: SET_TOKEN, payload: token })
 export const deleteToken = () => ({ type: DELETE_TOKEN })
-export const setAppTreeData = treeData => ({ type: SET_APP_TREE_DATA, payloadl: treeData })
+export const setAppTreeData = treeData => ({ type: SET_APP_TREE_DATA, payload: treeData })

@@ -2,41 +2,29 @@ import React, {useEffect, useState} from "react"
 import { Menu } from "antd"
 import { useAppContext, setAppTreeData } from "store"
 import { useAxios } from "api";
-
+import {getTreeDataFromCategoryList} from "utils/getTreeDataFromCategoryList"
 const { SubMenu } = Menu;
 
 export default function MenuSidebar() {
   const {store: {jwtToken}, dispatch} = useAppContext();
   const headers = {Authorization: `JWT ${jwtToken}`}
+  const [treeData, setTreeData] = useState([])
   const [{ data: categoryList, loading, error }, refetch] = useAxios({
-    url: "/api/categories/", 
+    url: "/api/categories", 
     headers
   })
-  const mainCategoryList = categoryList ? (categoryList.filter(
-    function(element) {
-      return element.parent === null
-    }
-  )) : null
+  useEffect(() => {
+    getTreeDataFromCategoryList(categoryList).then((treeDataToSet) => {
+      setTreeData(treeDataToSet);
+      dispatch(setAppTreeData(treeDataToSet))
+    }).catch(err => {
+      console.log(err);
+    })
+  }, [categoryList])
 
-  const treeData = []
-  const childrenResponse = []
-
-  mainCategoryList && mainCategoryList.forEach(mainCategory => {
-    const subCategoryList = categoryList.filter(function(element) {
-      return element.parent === mainCategory.id
-    })
-    subCategoryList.forEach(subCategory => {
-      childrenResponse.push({
-        title: subCategory.title,
-        value: subCategory.id
-      })
-    })
-    treeData.push ({
-      title: mainCategory.title,
-      value: mainCategory.id,
-      children: childrenResponse
-    })
-  })
+  useEffect(() => {
+    dispatch(setAppTreeData(treeData))
+  }, [treeData])
 
   return (
     <>   

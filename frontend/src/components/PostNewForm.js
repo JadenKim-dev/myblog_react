@@ -10,10 +10,9 @@ import { axiosInstance, useAxios } from "api";
 export default function PostNewForm() {
   const history = useHistory();
   const { store } = useAppContext();
-  const { jwtToken } = store;
+  const { jwtToken, treeData } = store;
   console.log(store)
   const headers = {Authorization: `JWT ${jwtToken}`}
-  const [categoryList, setCategoryList] = useState([])
   const [selectedCategory, setSelectedCategory] = useState()
   
   const handleFinish = async values => {
@@ -58,43 +57,6 @@ export default function PostNewForm() {
       base64: file.url || file.preview
     })    
   }
-
-  const [{ data: originCategoryList, loading, error }, refetch] = useAxios({
-    url: "/api/categories/", 
-    headers
-  })
-
-  useEffect(() => {
-    if (!originCategoryList) setCategoryList([1,2,3])
-    else setCategoryList(originCategoryList)
-  }, [originCategoryList])
-
-  const mainCategoryList = categoryList ? (categoryList.filter(
-    function(element) {
-      return element.parent === null
-    }
-  )) : null
-  
-  const treeData = []
-  const childrenResponse = []
-  
-  mainCategoryList && mainCategoryList.forEach(mainCategory => {
-    const subCategoryList = categoryList.filter(function(element) {
-      return element.parent === mainCategory.id
-    })
-    subCategoryList.forEach(subCategory => {
-      childrenResponse.push({
-        title: subCategory.title,
-        value: subCategory.id
-      })
-    })
-    treeData.push ({
-      title: mainCategory.title,
-      value: mainCategory.id,
-      children: childrenResponse
-    })
-  }) //TODO: treeData를 AppContext를 통해 한번만 불러오도록 처리
-  
   const handleSelectChange = value => {
     setSelectedCategory(value);
   };

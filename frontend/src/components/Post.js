@@ -13,12 +13,11 @@ export default function Post({ post }) {
     <div className="post" style={{ marginBottom: "1.5em" }}>
       <Card
         style={{ width: "100%" }}
-        hoverable
       >
         <Card.Meta
           avatar={avatar_url ? <Avatar size="large" src={avatar_url} /> : 
                  <Avatar size="large" icon={<UserOutlined />} /> }
-          title={username} /*TODO: 클릭 시 프로필 페이지로 이동 */
+          title={<a href="#" style={{color: "black"}}>{username}</a>} /*TODO: 클릭 시 프로필 페이지로 이동 */
           description={created_at}
         />
         <Divider />
