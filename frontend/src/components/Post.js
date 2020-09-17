@@ -7,7 +7,7 @@ const { Text, Link } = Typography;
 
 export default function Post({ post }) {
   const { author, title, content, photo, post_category, tag_list, is_like, created_at } = post;
-  const {username, name, avatar_url} = author;
+  const { pk, username, name, avatar_url } = author;
   
   return(
     <div className="post" style={{ marginBottom: "1.5em" }}>
@@ -17,7 +17,7 @@ export default function Post({ post }) {
         <Card.Meta
           avatar={avatar_url ? <Avatar size="large" src={avatar_url} /> : 
                  <Avatar size="large" icon={<UserOutlined />} /> }
-          title={<a href="#" style={{color: "black"}}>{username}</a>} /*TODO: 클릭 시 프로필 페이지로 이동 */
+          title={<a href={`/accounts/profile/${pk}/`} style={{color: "black"}}>{username}</a>} /*TODO: 클릭 시 프로필 페이지로 이동 */
           description={created_at}
         />
         <Divider />

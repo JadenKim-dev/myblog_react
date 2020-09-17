@@ -2,8 +2,7 @@ import React from "react"
 import {useHistory, useLocation} from "react-router-dom";
 import {Form, Input, Button, notification} from "antd";
 import {SmileTwoTone, FrownTwoTone} from "@ant-design/icons";
-import MenuSidebar from "./MenuSidebar";
-import {useAppContext, setToken, setTreeData} from "store"
+import {useAppContext, setToken, setTreeData, setUsername} from "store"
 import {axiosInstance} from "api"
 
 export default function Login() {
@@ -16,10 +15,11 @@ export default function Login() {
       const { username, password } = values
       const data = {username, password}
       try {
-        const response = await axiosInstance.post("accounts/token/", data)
+        const response = await axiosInstance.post("api/token/", data)
         console.log(response)
         const { data: {token: jwtToken} } = response
         dispatch(setToken(jwtToken))
+        dispatch(setUsername(username))
         notification.open({
           message: "로그인 성공!",
           description: (location.state ? "페이지" : "홈으") + "로 이동합니다", 

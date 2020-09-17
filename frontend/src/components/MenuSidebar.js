@@ -6,7 +6,7 @@ import {getTreeDataFromCategoryList} from "utils/getTreeDataFromCategoryList"
 const { SubMenu } = Menu;
 
 export default function MenuSidebar() {
-  const {store: {jwtToken}, dispatch} = useAppContext();
+  const {store: {jwtToken, isAuthenticated}, dispatch} = useAppContext();
   const headers = {Authorization: `JWT ${jwtToken}`}
   const [treeData, setTreeData] = useState([])
   const [{ data: categoryList, loading, error }, refetch] = useAxios({
@@ -27,7 +27,7 @@ export default function MenuSidebar() {
   }, [treeData])
 
   return (
-    <>   
+    <>
       <Menu
         defaultOpenKeys={['1']}
         mode="inline"
@@ -44,7 +44,7 @@ export default function MenuSidebar() {
             </SubMenu>
           )
         })}
-      </Menu>
+      </Menu>       
     </>
   )
 }

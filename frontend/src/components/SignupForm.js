@@ -17,7 +17,7 @@ export default function SignupForm() {
       const data = {username, password, birth_date, gender, phone_number, email: email ? email : ""}
       console.log(email);
       try{
-        await axiosInstance.post("/accounts/signup/", data)
+        await axiosInstance.post("/api/users/", data)
         notification.open({
           message: "회원가입에 성공했어요!",
           description: "로그인 페이지로 이동합니다",

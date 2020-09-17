@@ -4,8 +4,10 @@ import "./AppLayout.scss";
 import LogoImage from "assets/logo.jpg";
 import TopnavMenu from "components/TopnavMenu";
 import MenuSidebar from "./MenuSidebar"
+import {useAppContext} from "store";
 
-function AppLayout({ children }) {  
+function AppLayout({ children }) {
+  const {store: {isAuthenticated}} = useAppContext()
   return (
     <div className="app">
       <div className="header">
@@ -20,7 +22,7 @@ function AppLayout({ children }) {
         </div>
       </div>
       <div className="menu-sidebar">
-        <MenuSidebar />
+        { isAuthenticated && <MenuSidebar /> }
       </div>
       <div className="contents">{children}</div>
       <div className="suggestion-sidebar">

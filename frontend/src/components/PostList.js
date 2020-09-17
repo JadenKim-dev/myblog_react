@@ -13,7 +13,6 @@ export default function PostList() {
   })
   useEffect(() => {
     setPostList(origPostList)
-    console.log("origPostList: ", origPostList)
   }, [origPostList])
   
   return(

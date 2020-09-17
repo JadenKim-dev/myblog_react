@@ -1,0 +1,18 @@
+.profile-page {
+  .user-content {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas:
+      "avatar user-info user-info user-info user-info";
+    justify-content: space-between;
+    .avatar{
+      grid-area: avatar;   
+      margin-right: 3em;
+    }
+    .user-info{
+      grid-area: user-info;
+    }
+  }
+  .post-content {
+  }
+}
