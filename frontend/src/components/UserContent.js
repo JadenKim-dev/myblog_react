@@ -5,7 +5,6 @@ import {Divider, Avatar, Button} from "antd";
 
 export default function UserContent({ userData, request_username }) {
   const {pk, username: profile_username, email, avatar_url} = userData;
-  console.log(profile_username)
   return (
     <>
       <div className="avatar">
