@@ -1,22 +1,24 @@
 import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {Form, Input, Upload, Modal, Button, TreeSelect, notification} from "antd";
-import { SmileTwoTone, PlusOutlined } from "@ant-design/icons"
+import { SmileTwoTone, FrownTwoTone, PlusOutlined } from "@ant-design/icons"
 import {useAppContext} from "store";
 import { getBase64FromFile } from "utils/base64";
 import { axiosInstance, useAxios } from "api";
+import {parseErrorMessages} from "utils/forms";
 // import CategorySelect from "./CategorySelect";
 
 export default function PostNewForm() {
   const history = useHistory();
   const { store } = useAppContext();
   const { jwtToken, treeData } = store;
-  console.log(store)
   const headers = {Authorization: `JWT ${jwtToken}`}
+  const [fieldErrors, setFieldErrors] = useState({});
   const [selectedCategory, setSelectedCategory] = useState()
   
   const handleFinish = async values => {
     const {title, photo: {fileList}, content} = values;
+    setFieldErrors({})    
     const formData = new FormData();
     formData.append("title", title);
     fileList.forEach(file => {
@@ -35,6 +37,12 @@ export default function PostNewForm() {
     }
     catch(error) {
       if (error.response) {
+        setFieldErrors(parseErrorMessages(error.response.data))
+        notification.open({
+          message: "포스팅 작성에 실패했습니다",
+          description: "입력하신 정보를 다시 한 번 확인해주세요",
+          icon: <FrownTwoTone />
+        })
       }
     }  
   }
@@ -69,6 +77,7 @@ export default function PostNewForm() {
         rules={[
           {required: true, message:"제목을 입력해주세요!"}
         ]}
+        {...fieldErrors.title}
       >
         <Input placeholder="input title" />
       </Form.Item>
@@ -77,6 +86,7 @@ export default function PostNewForm() {
         label="Photo"
         name="photo"
         rules={[{ required: true, message: "사진을 입력해주세요." }]}
+        {...fieldErrors.photo}
       >
         <Upload
           listType="picture-card"
@@ -102,6 +112,7 @@ export default function PostNewForm() {
         rules={[
           {required: true, message:"글을 입력해주세요!"}
         ]}
+        {...fieldErrors.content}
       >
         <Input placeholder="input caption" />
       </Form.Item>
@@ -109,6 +120,7 @@ export default function PostNewForm() {
       <Form.Item
         label="카테고리"
         name="category"
+        {...fieldErrors.category}
       >
         <TreeSelect
           value={selectedCategory}

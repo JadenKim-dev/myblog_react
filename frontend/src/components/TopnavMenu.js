@@ -7,7 +7,8 @@ export default function TopnavMenu() {
   const history = useHistory()
   const {store: {isAuthenticated}, dispatch} = useAppContext()
   const handleClick = () => {
-      dispatch(deleteToken())
+    dispatch(deleteToken())
+    history.push("/accounts/login")
   }
   return (
     <>

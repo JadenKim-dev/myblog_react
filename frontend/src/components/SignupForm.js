@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import {Form, Input, Button, Select, DatePicker, notification} from "antd";
 import {SmileTwoTone, FrownTwoTone} from "@ant-design/icons";
 import {axiosInstance} from "api";
+import {parseErrorMessages} from "utils/forms";
+import getConvertedDate from "utils/getConvertedDate";
 
 const {Option} = Select;
 
@@ -14,8 +16,10 @@ export default function SignupForm() {
     async function fn() {
       setFieldErrors({})
       const {username, password, birth_date, gender, phone_number, email } = values;
-      const data = {username, password, birth_date, gender, phone_number, email: email ? email : ""}
-      console.log(email);
+      const data = {username, password, gender, phone_number, 
+                    email: email ? email : "",
+                    birth_date: getConvertedDate(birth_date)
+                   }
       try{
         await axiosInstance.post("/api/users/", data)
         notification.open({
@@ -27,17 +31,18 @@ export default function SignupForm() {
       }
       catch(error) {
         if (error.response) {
+          error.response.data && setFieldErrors(parseErrorMessages(error.response.data))
           notification.open({
             message: "회원가입에 실패했습니다",
             description: "입력하신 정보를 다시 한 번 확인해주세요",
             icon: <FrownTwoTone />
           })
-          console.log("error.response: ", error.response) 
         }
       }
     }
     fn()
   }
+  console.log(fieldErrors)
   return(
    <Form
       onFinish={onFinish}
@@ -47,6 +52,7 @@ export default function SignupForm() {
         label="아이디"
         name="username"
         rules={[{ required: true, message: '아이디를 입력해주세요!' }]}
+        {...fieldErrors.username}
       >
         <Input />
       </Form.Item>
@@ -55,6 +61,7 @@ export default function SignupForm() {
         label="비밀번호"
         name="password"
         rules={[{ required: true, message: '비밀번호를 입력해주세요!' }]}
+        {...fieldErrors.password}
       >
         <Input.Password />
       </Form.Item>
@@ -82,11 +89,21 @@ export default function SignupForm() {
         <Input.Password />
       </Form.Item>
       
-      <Form.Item name="birth_date" label="생년월일" rules={[{ required: true, message: "생년월일을 선택해주세요!" }]}>
+      <Form.Item 
+        name="birth_date"
+        label="생년월일"
+        rules={[{ required: true, message: "생년월일을 선택해주세요!" }]}
+        {...fieldErrors.birth_date}
+      >
         <DatePicker />
       </Form.Item>
 
-      <Form.Item name="gender" label="성별" rules={[{ required: true, message: "성별을 선택해주세요!" }]}>
+      <Form.Item 
+        name="gender" 
+        label="성별" 
+        rules={[{ required: true, message: "성별을 선택해주세요!" }]}
+        {...fieldErrors.gender}
+      >
         <Select
           placeholder="성별을 선택해주세요!"
           allowClear
@@ -100,6 +117,7 @@ export default function SignupForm() {
         label="휴대전화"
         name="phone_number"
         rules={[{ required: true, message: '전화번호를 입력해주세요!' }]}
+        {...fieldErrors.phone_number}
       >
         <Input />
       </Form.Item>
@@ -107,6 +125,7 @@ export default function SignupForm() {
       <Form.Item
         label="이메일"
         name="email"
+        {...fieldErrors.email}
       >
         <Input />
       </Form.Item>

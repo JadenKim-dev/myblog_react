@@ -1,5 +1,6 @@
 import React from "react";
 import {Divider, Avatar, Button} from "antd";
+import {UserOutlined} from "@ant-design/icons"
 // import {API_HOST} from "Constants";
 
 
@@ -8,7 +9,8 @@ export default function UserContent({ userData, request_username }) {
   return (
     <>
       <div className="avatar">
-         <Avatar src={avatar_url} alt="avatar" size={128} />
+         {avatar_url ? <Avatar size="large" src={avatar_url} size={128} /> : 
+                 <Avatar size="large" icon={<UserOutlined />} size={128} /> }
          {request_username === profile_username && (
            <Button href={`/accounts/profile/${pk}/edit`}>프로필 수정하기</Button>
          )}

@@ -15,6 +15,7 @@ export default function ProfileEdit({ match }) {
   })
   useEffect(() => {
     if(origUserData) {
+      console.log(origUserData)
       setUserData(origUserData);      
     }
     else {
@@ -24,7 +25,7 @@ export default function ProfileEdit({ match }) {
   
   return (
     <MyCard title="프로필 수정하기" >
-      <ProfileEditForm userData={userData} />
+      <ProfileEditForm userData={userData} user_id={match.params.user_id} />
     </MyCard>
   )
 }
