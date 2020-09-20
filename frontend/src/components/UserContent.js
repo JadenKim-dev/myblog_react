@@ -12,7 +12,10 @@ export default function UserContent({ userData, request_username }) {
          {avatar_url ? <Avatar size="large" src={avatar_url} size={128} /> : 
                  <Avatar size="large" icon={<UserOutlined />} size={128} /> }
          {request_username === profile_username && (
-           <Button href={`/accounts/profile/${pk}/edit`}>프로필 수정하기</Button>
+          <>
+           <Button href={`/accounts/profile/${pk}/edit`} style={{ marginBottom: "0.5rem" }}>프로필 수정하기</Button>
+           <Button href={`/accounts/profile/${pk}/change_password`} type="primary">비밀번호 바꾸기</Button>
+          </>
          )}
       </div>
       <div className="user-info">

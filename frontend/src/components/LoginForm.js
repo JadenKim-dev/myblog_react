@@ -27,6 +27,13 @@ export default function Login() {
         })
         history.push(loginRedirectUrl);
       } catch(error) {
+        if (error.response){
+          notification.open({
+            message: '로그인에 실패했습니다.',
+            description: '입력하신 정보를 확인해주세요.',
+            icon: <FrownTwoTone twoToneColor="tomato"/>
+          })
+        }
         console.error(error)
       }      
     }
