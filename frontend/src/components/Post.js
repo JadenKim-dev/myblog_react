@@ -1,16 +1,17 @@
 import React from "react";
 import PostList from "components/PostList";
 import { Avatar, Card, Divider, Image, Typography } from 'antd';
-import { UserOutlined, HeartTwoTone, BarsOutlined } from '@ant-design/icons';
+import { UserOutlined, HeartTwoTone, HeartOutlined, BarsOutlined } from '@ant-design/icons';
+import {useAppContext} from "store";
 
 const { Text, Link } = Typography;
 
-export default function Post({ post }) {
-  const { author, title, content, photo, post_category, tag_list, is_like, created_at } = post;
+export default function Post({ post, handleLike }) {
+  const { id, author, title, content, photo, post_category, tag_list, is_like, created_at, like_user_number } = post;
   const { pk, username, name, avatar_url } = author;
-  const handleLikeClick = e => {
-    console.log("LikeClick")
-  }
+  const {store:{jwtToken}} = useAppContext()
+  const headers = {Authorization: `JWT ${jwtToken}`}
+
   const handleCommentClick = e => {
     console.log("CommentClick")
   }
@@ -19,9 +20,22 @@ export default function Post({ post }) {
       <Card
         style={{ width: "700px" }}
         actions={[
-          <div key="like" onClick={handleLikeClick}>
-            <HeartTwoTone twoToneColor="#eb2f96" style={{ display: "inline", marginRight: "0.3em" }} />
-            <div style={{ display: "inline", fontSize:"0.9em" }}>12</div>
+          <div 
+            key="like"
+            onClick={() => handleLike({post, isLike: !is_like})}
+          >
+            {is_like && (
+              <HeartTwoTone 
+                twoToneColor="#eb2f96" 
+                style={{ display: "inline", marginRight: "0.3em" }}
+              />
+            )}
+            {!is_like && (
+              <HeartOutlined 
+                style={{ display: "inline", marginRight: "0.3em" }} 
+              />
+            )}
+            <div style={{ display: "inline", fontSize:"0.9em" }}>{like_user_number}</div>
           </div>,
           <div key="comment" onClick={handleCommentClick}>
             <BarsOutlined style={{ display: "inline", marginRight: "0.3em" }}/>
