@@ -59,8 +59,10 @@ const SET_TOKEN = "APP/SET_TOKEN"
 const DELETE_TOKEN = "APP/DELETE_TOKEN"
 const SET_APP_TREE_DATA = "APP/SET_TREE_DATA"
 const SET_USERNAME = "APP/SET_USERNAME"
+const SET_CATEGORY_KEY = "APP/SET_CATEGORY_KEY"
 
 export const setToken = token => ({ type: SET_TOKEN, payload: token })
 export const deleteToken = () => ({ type: DELETE_TOKEN })
 export const setAppTreeData = treeData => ({ type: SET_APP_TREE_DATA, payload: treeData })
 export const setUsername = username => ({ type: SET_USERNAME, payload: username })
+export const setCategoryKey = key => ({ type: SET_CATEGORY_KEY, payload: key })

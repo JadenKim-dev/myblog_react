@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react"
-import { Menu } from "antd"
+import { Menu, Anchor } from "antd"
 import { useAppContext, setAppTreeData } from "store"
 import { useAxios } from "api";
 import {getTreeDataFromCategoryList} from "utils/getTreeDataFromCategoryList"
 const { SubMenu } = Menu;
+
+const { Link } = Anchor;
 
 export default function MenuSidebar() {
   const {store: {jwtToken, isAuthenticated}, dispatch} = useAppContext();
@@ -26,19 +28,28 @@ export default function MenuSidebar() {
     dispatch(setAppTreeData(treeData))
   }, [treeData])
 
+  const handleMenuSelect = ({key}) => {
+    console.log(key)
+  }
+
   return (
     <>
+      <Anchor>
+        <Link href="#" title="전체보기" />
+      </Anchor>
       <Menu
-        defaultOpenKeys={['1']}
+        openKeys={treeData && treeData.map(mainCategory => String(mainCategory.value))}
         mode="inline"
+        onSelect={handleMenuSelect}
       >
         {treeData && treeData.map(mainCategory => {
           return (
             <SubMenu
               key={mainCategory.value}
               title={mainCategory.title}
+              onTitleClick={handleMenuSelect}
             >
-              {mainCategory.children && mainCategory.children.map(subCategory => (   /*forEach가 아닌 map 사용!!!!*/
+              {mainCategory.children && mainCategory.children.map(subCategory => (
                 <Menu.Item key={subCategory.value}>{subCategory.title}</Menu.Item>
               ))}
             </SubMenu>
