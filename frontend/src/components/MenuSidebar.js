@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react"
-import { Menu, Anchor } from "antd"
-import { useAppContext, setAppTreeData } from "store"
+import { Menu } from "antd"
+import { useAppContext, setAppTreeData, setCategoryKey } from "store"
 import { useAxios } from "api";
 import {getTreeDataFromCategoryList} from "utils/getTreeDataFromCategoryList"
 const { SubMenu } = Menu;
-
-const { Link } = Anchor;
 
 export default function MenuSidebar() {
   const {store: {jwtToken, isAuthenticated}, dispatch} = useAppContext();
@@ -30,27 +28,32 @@ export default function MenuSidebar() {
 
   const handleMenuSelect = ({key}) => {
     console.log(key)
+    if (key === "-1") {
+      dispatch(setCategoryKey(""))
+    }
+    else{
+      dispatch(setCategoryKey(key)) 
+    }
   }
 
   return (
     <>
-      <Anchor>
-        <Link href="#" title="전체보기" />
-      </Anchor>
       <Menu
-        openKeys={treeData && treeData.map(mainCategory => String(mainCategory.value))}
+        openKeys={treeData && treeData.map(mainCategory => mainCategory.title)}
         mode="inline"
         onSelect={handleMenuSelect}
+        defaultSelectedKeys={["-1"]}
       >
+        <Menu.Item key={-1} >전체보기</Menu.Item>
         {treeData && treeData.map(mainCategory => {
           return (
             <SubMenu
-              key={mainCategory.value}
+              key={mainCategory.title}
               title={mainCategory.title}
-              onTitleClick={handleMenuSelect}
+              /*onTitleClick={handleMenuSelect}*/
             >
               {mainCategory.children && mainCategory.children.map(subCategory => (
-                <Menu.Item key={subCategory.value}>{subCategory.title}</Menu.Item>
+                <Menu.Item key={subCategory.title}>{subCategory.title}</Menu.Item>
               ))}
             </SubMenu>
           )

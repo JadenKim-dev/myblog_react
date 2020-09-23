@@ -28,10 +28,15 @@ const reducer = ( prevState, action ) => {
   else if (type === SET_USERNAME) {
     const { payload: username } = action;
     const newState = {...prevState, username}
-    console.log(username);
     return UpdateWithSideEffect(newState, () => {
       setStorageItem("username", username)
     })
+  }
+  else if (type === SET_CATEGORY_KEY) {
+    const {payload: categoryKey} = action;
+    const newState = {...prevState, categoryKey}
+    console.log("categoryKey set:", categoryKey)
+    return Update(newState)
   }
   return prevState
 }
@@ -44,6 +49,7 @@ export const AppProvider = ({ children }) => {
     username,
     isAuthenticated: (jwtToken.length > 0 ? true : false),
     treeData: [],
+    categoryKey: "",
   })
   return (
     <AppContext.Provider value={{ store, dispatch }}>

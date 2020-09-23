@@ -128,6 +128,7 @@ export default function PostNewForm() {
           treeData={treeData}
           placeholder="카테고리를 선택해주세요"
           onChange={handleSelectChange}
+          treeDefaultExpandAll={true}
         />
       </Form.Item>
       

@@ -5,13 +5,14 @@ import { useAppContext } from "store";
 import {axiosInstance} from "api";
 
 export default function PostList() {
-  const {store: {jwtToken}} = useAppContext();
+  const {store: {jwtToken, categoryKey}} = useAppContext();
   const [postList, setPostList] = useState([])
   const headers = {Authorization: `JWT ${jwtToken}`}
   const [{data: origPostList, loading, error}, refetch] = useAxios({
-    url: "/api/posts/",
+    url: '/api/posts/' + (categoryKey ? categoryKey : ""),
     headers
   })
+
   useEffect(() => {
     setPostList(origPostList)
   }, [origPostList])

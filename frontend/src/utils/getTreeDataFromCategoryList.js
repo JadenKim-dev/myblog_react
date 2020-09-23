@@ -11,6 +11,7 @@ export function getTreeDataFromCategoryList(categoryList) {
           return element.parent === mainCategory.id
         })
         return ({
+          selectable: false,
           title: mainCategory.title,
           value: mainCategory.id,
           children: subCategoryList.map(subCategory => ({
