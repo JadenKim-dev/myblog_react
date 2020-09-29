@@ -4,12 +4,12 @@ import Post from "./Post"
 import { useAppContext } from "store";
 import {axiosInstance} from "api";
 
-export default function PostList() {
+export default function PostList({ queryString }) {
   const {store: {jwtToken, categoryKey}} = useAppContext();
   const [postList, setPostList] = useState([])
   const headers = {Authorization: `JWT ${jwtToken}`}
   const [{data: origPostList, loading, error}, refetch] = useAxios({
-    url: '/api/posts/' + (categoryKey ? categoryKey : ""),
+    url: '/api/posts/' + (categoryKey ? categoryKey : "") + queryString,
     headers
   })
 

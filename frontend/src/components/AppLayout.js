@@ -4,6 +4,7 @@ import "./AppLayout.scss";
 import LogoImage from "assets/logo.jpg";
 import TopnavMenu from "components/TopnavMenu";
 import MenuSidebar from "./MenuSidebar"
+import SearchBar from "./SearchBar";
 import {useAppContext} from "store";
 
 function AppLayout({ children }) {
@@ -15,7 +16,7 @@ function AppLayout({ children }) {
           <img src={LogoImage} alt="logo" />
         </a>
         <div className="search">
-          <Input.Search size="large"/>
+          <SearchBar />
         </div>
         <div className="topnav">
           <TopnavMenu />
